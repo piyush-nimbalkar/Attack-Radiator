@@ -1,32 +1,39 @@
-import csv
 import time
 from collections import deque
 
 def average(seq):
-    return reduce(lambda x, y: x+y, seq, 0) / len(seq)
+    sum = 0
+    for x in seq:
+        sum = sum + x
+    return sum / len(seq)
 
-def main1():
+
+def main():
     memory = deque([])
     processor_time = deque([])
     processor_io = deque([])
+    max_entries = 10
 
-    f = open('Calc_000001.csv', 'r')
-    reader = csv.reader(f)
-    reader.next()
+    while(1):
+        log = tail("C:\PerfLogs\\Notepad.csv", max_entries)
+        # log = tail("data.csv", max_entries) # for development in ubuntu
+        for entry in log:
+            values = entry.split('"')
+            memory.append(float(values[1]))
+            processor_time.append(float(values[3]))
+            processor_io.append(float(values[5]))
 
-    for r in reader:
-        memory.append(float(r[6]))
-        processor_time.append(float(r[1]))
-        processor_io.append(float(r[2]))
+            print(average(processor_time), "  |  ", average(memory), "  |  ", average(processor_io))
+            time.sleep(0.5)
 
-        print average(memory), "  |  ", average(processor_time), "  |  ", average(processor_io)
-        time.sleep(0.01)
+            if len(memory) >= max_entries:
+                memory.popleft()
+                processor_time.popleft()
+                processor_io.popleft()
 
-        if len(memory) >= 10:
-            memory.popleft()
-            processor_time.popleft()
-            processor_io.popleft()
 
-    f.close()
+def tail(filename, n = 50):
+    return deque(open(filename, 'r'), n)
+
 
 main()
