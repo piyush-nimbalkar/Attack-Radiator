@@ -11,9 +11,10 @@ io_operations = deque([])
 
 def average(seq):
     sum = 0
+    print(seq)
     for x in seq:
         sum = sum + x
-    return sum / len(seq)
+    return sum / len(seq) if len(seq) > 0 else 0
 
 
 def remove_last_entry():
@@ -54,7 +55,10 @@ def main():
         log = tail("data.csv", MAX_ENTRIES) # for development in Linux
         for entry in log:
             values = entry.split('"')
-            add_new_entry(float(values[3]), float(values[5]), float(values[7]))
+            if bool(values[3].strip()):
+                add_new_entry(float(values[3]), float(values[5]), float(values[7]))
+            else:
+                add_new_entry(0, 0, 0)
 
             write_values()
             time.sleep(0.5)
