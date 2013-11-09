@@ -2,6 +2,13 @@ import time
 import json
 from collections import deque
 
+
+MAX_ENTRIES = 10
+memory_usage = deque([])
+processor_time = deque([])
+io_operations = deque([])
+
+
 def average(seq):
     sum = 0
     for x in seq:
@@ -9,41 +16,51 @@ def average(seq):
     return sum / len(seq)
 
 
-def main():
-    memory = deque([])
-    processor_time = deque([])
-    processor_io = deque([])
-    max_entries = 10
+def remove_last_entry():
+    processor_time.popleft()
+    io_operations.popleft()
+    memory_usage.popleft()
 
 
-    while(1):
-        log = tail("C:\PerfLogs\\Notepad.csv", max_entries)
-        # log = tail("data.csv", max_entries) # for development in ubuntu
-        for entry in log:
-            values = entry.split('"')
-            memory.append(float(values[7]))
-            processor_time.append(float(values[3]))
-            processor_io.append(float(values[5]))
+def add_new_entry(value_one, value_two, value_three):
+    processor_time.append(value_one)
+    io_operations.append(value_two)
+    memory_usage.append(value_three)
 
-            dict_data = {}
-            dict_data['processor_time'] = average(processor_time)
-            dict_data['memory_usage'] = average(memory)
-            dict_data['io_operations'] = average(processor_io)
-            f = open("data.json", 'w')
-            f.write(json.dumps(dict_data))
-            f.close()
 
-            print(average(processor_time), "  |  ", average(memory), "  |  ", average(processor_io))
-            time.sleep(2)
+def write_values():
+    data = {}
+    data['processor_time'] = average(processor_time)
+    data['io_operations'] = average(io_operations)
+    data['memory_usage'] = average(memory_usage)
+    print(data)
+    write_to_file(data)
 
-            if len(memory) >= max_entries:
-                memory.popleft()
-                processor_time.popleft()
-                processor_io.popleft()
+
+def write_to_file(dict_data):
+    f = open("data.json", 'w')
+    f.write(json.dumps(dict_data))
+    f.close()
 
 
 def tail(filename, n = 50):
     return deque(open(filename, 'r'), n)
+
+
+def main():
+
+    while(1):
+        # log = tail("C:\PerfLogs\\Notepad.csv", MAX_ENTRIES) # for Windows
+        log = tail("data.csv", MAX_ENTRIES) # for development in Linux
+        for entry in log:
+            values = entry.split('"')
+            add_new_entry(float(values[3]), float(values[5]), float(values[7]))
+
+            write_values()
+            time.sleep(0.5)
+
+            if len(memory_usage) >= MAX_ENTRIES:
+                remove_last_entry()
 
 
 main()
