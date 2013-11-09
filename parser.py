@@ -1,4 +1,5 @@
 import time
+import json
 from collections import deque
 
 def average(seq):
@@ -14,17 +15,26 @@ def main():
     processor_io = deque([])
     max_entries = 10
 
+
     while(1):
         log = tail("C:\PerfLogs\\Notepad.csv", max_entries)
         # log = tail("data.csv", max_entries) # for development in ubuntu
         for entry in log:
             values = entry.split('"')
-            memory.append(float(values[1]))
+            memory.append(float(values[7]))
             processor_time.append(float(values[3]))
             processor_io.append(float(values[5]))
 
+            dict_data = {}
+            dict_data['processor_time'] = average(processor_time)
+            dict_data['memory_usage'] = average(memory)
+            dict_data['io_operations'] = average(processor_io)
+            f = open("data.json", 'w')
+            f.write(json.dumps(dict_data))
+            f.close()
+
             print(average(processor_time), "  |  ", average(memory), "  |  ", average(processor_io))
-            time.sleep(0.5)
+            time.sleep(2)
 
             if len(memory) >= max_entries:
                 memory.popleft()
