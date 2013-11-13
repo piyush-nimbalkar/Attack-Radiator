@@ -4,7 +4,7 @@ Copyright (C) 1997-2011 Mark Russinovich
 Sysinternals - www.sysinternals.com
 
 ------------------------------------------------------------------------------
-notepad.exe pid: 308
+notepad.exe pid: 412
 Command line: "C:\WINDOWS\system32\notepad.exe" 
 
 Base        Size      Path
@@ -31,3 +31,39 @@ Base        Size      Path
 0x77c00000  0x8000    VERSION.dll
 0x769c0000  0xb4000   USERENV.dll
 0x5ad70000  0x38000   UxTheme.dll
+0x77b40000  0x22000   appHelp.dll
+0x76fd0000  0x7f000   CLBCATQ.DLL
+0x77050000  0xc5000   COMRes.dll
+0x77920000  0xf3000   SETUPAPI.dll
+0x76990000  0x25000   ntshrui.dll
+0x76b20000  0x11000   ATL.DLL
+0x5b860000  0x55000   NETAPI32.dll
+0x7e4b0000  0x89000   hhctrl.ocx
+0x77690000  0x21000   NTMARTA.DLL
+0x71bf0000  0x13000   SAMLIB.dll
+0x76f60000  0x2c000   WLDAP32.dll
+0x65e20000  0x25000   itss.dll
+0x7e1e0000  0xa2000   urlmon.dll
+0x771b0000  0xaa000   WININET.dll
+0x77a80000  0x95000   CRYPT32.dll
+0x77b20000  0x12000   MSASN1.dll
+0x7e290000  0x171000  shdocvw.dll
+0x754d0000  0x80000   CRYPTUI.dll
+0x76c30000  0x2e000   WINTRUST.dll
+0x76c90000  0x28000   IMAGEHLP.dll
+0x7e720000  0xb0000   SXS.DLL
+0x71800000  0x88000   shdoclc.dll
+0x03480000  0x2c5000  xpsp2res.dll
+0x75cf0000  0x91000   MLANG.dll
+0x75c50000  0x7d000   jscript.dll
+0x74980000  0x113000  msxml3.dll
+0x76390000  0x1d000   IMM32.DLL
+0x04350000  0xbe000   HelpCtr.exe
+0x74b80000  0x8c000   printui.dll
+0x77cc0000  0x32000   ACTIVEDS.dll
+0x76e10000  0x25000   adsldpc.dll
+0x74ae0000  0x7000    CFGMGR32.dll
+0x71b20000  0x12000   MPR.dll
+0x75f80000  0xfd000   browseui.dll
+0x71d40000  0x1b000   actxprxy.dll
+0x10000000  0x2f000   xpsp1res.dll

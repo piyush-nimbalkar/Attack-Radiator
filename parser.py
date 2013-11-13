@@ -13,18 +13,15 @@ io_operations = deque([])
 memory_usage = deque([])
 
 
-def average(seq):
-    sum = 0
-    for x in seq:
-        sum = sum + x
-    return sum / len(seq) if len(seq) > 0 else 0
+def read_log_from_file():
+    if platform.system() == 'Windows':
+        return tail("C:\PerfLogs\\notepad_log.csv")
+    else:
+        return tail("notepad_log.csv")
 
 
-def remove_last_entry():
-    packet_frequency.popleft()
-    processor_time.popleft()
-    io_operations.popleft()
-    memory_usage.popleft()
+def tail(filename, n = 1):
+    return deque(open(filename, 'r'), n)
 
 
 def add_new_entry(values):
@@ -37,6 +34,13 @@ def add_new_entry(values):
         add_new_entry(0, 0, 0, 0)
 
 
+def remove_last_entry():
+    packet_frequency.popleft()
+    processor_time.popleft()
+    io_operations.popleft()
+    memory_usage.popleft()
+
+
 def store_values_to_hash():
     data = {}
     data['packet_frequency'] = average(packet_frequency)
@@ -45,22 +49,12 @@ def store_values_to_hash():
     data['memory_usage'] = average(memory_usage)
     return data
 
-def write_to_file(dict_data):
-    print(dict_data)
-    f = open("data.json", 'w')
-    f.write(json.dumps(dict_data))
-    f.close()
 
-
-def tail(filename, n = 50):
-    return deque(open(filename, 'r'), n)
-
-
-def read_log_from_file():
-    if platform.system() == 'Windows':
-        return tail("C:\PerfLogs\\notepad_log.csv", MAX_ENTRIES)
-    else:
-        return tail("notepad_log.csv", MAX_ENTRIES)
+def average(seq):
+    sum = 0
+    for x in seq:
+        sum = sum + x
+    return sum / len(seq) if len(seq) > 0 else 0
 
 
 def list_dlls():
@@ -81,7 +75,19 @@ def dll_parser():
 
 
 def original_list():
-    return ['ntdll.dll', 'kernel32.dll', 'comdlg32.dll', 'ADVAPI32.dll', 'RPCRT4.dll', 'Secur32.dll', 'COMCTL32.dll', 'msvcrt.dll', 'GDI32.dll', 'USER32.dll', 'SHLWAPI.dll', 'SHELL32.dll', 'WINSPOOL.DRV', 'ShimEng.dll', 'AcGenral.DLL', 'WINMM.dll', 'ole32.dll', 'OLEAUT32.dll', 'MSACM32.dll', 'VERSION.dll', 'USERENV.dll', 'UxTheme.dll']
+    file = open('original_dll_list.txt', 'r')
+    dlls = []
+    for line in file:
+        dlls.append(line.strip())
+    file.close()
+    return dlls
+
+
+def write_to_file(dict_data):
+    print(dict_data)
+    f = open("data.json", 'w')
+    f.write(json.dumps(dict_data))
+    f.close()
 
 
 def main():
@@ -95,7 +101,7 @@ def main():
             if platform.system() == 'Windows': list_dlls()
             data['dll_list'] = dll_parser()
             write_to_file(data)
-            time.sleep(1)
+            time.sleep(2)
 
 
 main()
