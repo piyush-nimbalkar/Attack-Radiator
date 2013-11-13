@@ -1,5 +1,6 @@
 import time
 import json
+import platform
 from collections import deque
 
 
@@ -53,8 +54,10 @@ def tail(filename, n = 50):
 
 def main():
     while(1):
-        log = tail("C:\PerfLogs\\notepad_log.csv", MAX_ENTRIES) # for Windows
-        # log = tail("notepad_log.csv", MAX_ENTRIES) # for development in Linux
+        if platform.system() == 'Windows':
+            log = tail("C:\PerfLogs\\notepad_log.csv", MAX_ENTRIES)
+        else:
+            log = tail("notepad_log.csv", MAX_ENTRIES)
         for entry in log:
             values = entry.split('"')
             if bool(values[3].strip()):
