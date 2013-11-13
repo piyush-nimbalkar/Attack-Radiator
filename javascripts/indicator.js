@@ -18,6 +18,10 @@ function loadJSON() {
                 $("#io_operations").removeClass("green")
                 $("#io_operations").addClass("red")
             }
+            if (jsonObj.packet_frequency > 11) {
+                $("#packet_frequency").removeClass("green")
+                $("#packet_frequency").addClass("red")
+            }
         }
     }
     http_request.open("GET", data_file, true);
