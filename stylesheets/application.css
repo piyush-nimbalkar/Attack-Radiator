@@ -22,3 +22,9 @@
 .label {
    padding-top: 15px;
  }
+
+.list {
+   padding: 10px;
+   margin: 10px;
+   width: 250px;
+}

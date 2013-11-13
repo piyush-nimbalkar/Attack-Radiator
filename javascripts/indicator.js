@@ -22,10 +22,25 @@ function loadJSON() {
                 $("#packet_frequency").removeClass("green")
                 $("#packet_frequency").addClass("red")
             }
+            if (jsonObj.dll_list.length > 0) {
+                $("#dll").removeClass("green");
+                $("#dll").addClass("red");
+                $("#dll_list").addClass("red");
+                $("#dll_list").html(dll_list(jsonObj.dll_list));
+            }
         }
     }
     http_request.open("GET", data_file, true);
     http_request.send();
+}
+
+function dll_list(list) {
+    var str = "<div>SUSPICIOUS DLLs</div><ul>";
+    for (var i = 0; i < list.length; i++) {
+        str = str +  "<li>" + list[i] + "</li>";
+    }
+    str = str + "</ul>";
+    return str;
 }
 
 $(document).ready(function() {
