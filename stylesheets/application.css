@@ -20,7 +20,8 @@
 }
 
 .label {
-   padding-top: 15px;
+   padding-top: 8px;
+   font-weight: bold;
  }
 
 .list {

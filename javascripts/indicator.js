@@ -6,21 +6,26 @@ function loadJSON() {
     http_request.onreadystatechange  = function() {
         if (http_request.readyState == 4) {
             var jsonObj = JSON.parse(http_request.responseText);
+            $("#processor_time .label").append("(" + jsonObj.processor_time.toFixed(2) + ")");
+            $("#memory_usage .label").append("(" + jsonObj.memory_usage.toFixed(2) + ")");
+            $("#io_operations .label").append("(" + jsonObj.io_operations.toFixed(2) + ")");
+            $("#packet_frequency .label").append("(" + jsonObj.packet_frequency.toFixed(2) + ")");
+
             if (jsonObj.processor_time > 11) {
-                $("#processor_time").removeClass("green")
-                $("#processor_time").addClass("red")
+                $("#processor_time").removeClass("green");
+                $("#processor_time").addClass("red");
             }
             if (jsonObj.memory_usage > 11) {
-                $("#memory_usage").removeClass("green")
-                $("#memory_usage").addClass("red")
+                $("#memory_usage").removeClass("green");
+                $("#memory_usage").addClass("red");
             }
             if (jsonObj.io_operations > 11) {
-                $("#io_operations").removeClass("green")
-                $("#io_operations").addClass("red")
+                $("#io_operations").removeClass("green");
+                $("#io_operations").addClass("red");
             }
             if (jsonObj.packet_frequency > 11) {
-                $("#packet_frequency").removeClass("green")
-                $("#packet_frequency").addClass("red")
+                $("#packet_frequency").removeClass("green");
+                $("#packet_frequency").addClass("red");
             }
             if (jsonObj.dll_list.length > 0) {
                 $("#dll").removeClass("green");
