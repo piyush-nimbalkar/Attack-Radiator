@@ -1,1 +1,4 @@
 *.exe
+data.json
+dll_list.txt
+notepad_log.csv
