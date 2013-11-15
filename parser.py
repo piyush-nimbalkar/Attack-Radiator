@@ -24,14 +24,11 @@ def tail(filename, n = 1):
     return deque(open(filename, 'r'), n)
 
 
-def add_new_entry(values):
-    if bool(values[3].strip() and values[5].strip()):
-        packet_frequency.append(float(values[3]))
-        processor_time.append(float(values[5]))
-        io_operations.append(float(values[7]))
-        memory_usage.append(float(values[9]))
-    else:
-        add_new_entry(0, 0, 0, 0)
+def add_new_entry(value_1, value_2, value_3, value_4):
+    packet_frequency.append(value_1)
+    processor_time.append(value_2)
+    io_operations.append(value_3)
+    memory_usage.append(value_4)
 
 
 def remove_last_entry():
@@ -94,7 +91,12 @@ def main():
     while(1):
         log = read_log_from_file()
         for entry in log:
-            add_new_entry(entry.split('"'))
+            values = entry.split('"')
+            if bool(values[3].strip() and values[5].strip()):
+                add_new_entry(float(values[3]), float(values[5]), float(values[7]), float(values[9]))
+            else:
+                add_new_entry(0, 0, 0, 0)
+
             if len(memory_usage) >= MAX_ENTRIES: remove_last_entry()
             data = store_values_to_hash()
 

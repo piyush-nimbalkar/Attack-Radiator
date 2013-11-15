@@ -11,19 +11,19 @@ function loadJSON() {
             $("#io_operations .label").append("(" + jsonObj.io_operations.toFixed(2) + ")");
             $("#packet_frequency .label").append("(" + jsonObj.packet_frequency.toFixed(2) + ")");
 
-            if (jsonObj.processor_time > 11) {
+            if (jsonObj.processor_time > 2.5) {
                 $("#processor_time").removeClass("green");
                 $("#processor_time").addClass("red");
             }
-            if (jsonObj.memory_usage > 11) {
+            if (jsonObj.memory_usage > 36659200) {
                 $("#memory_usage").removeClass("green");
                 $("#memory_usage").addClass("red");
             }
-            if (jsonObj.io_operations > 11) {
+            if (jsonObj.io_operations > 1100) {
                 $("#io_operations").removeClass("green");
                 $("#io_operations").addClass("red");
             }
-            if (jsonObj.packet_frequency > 11) {
+            if (jsonObj.packet_frequency > 1) {
                 $("#packet_frequency").removeClass("green");
                 $("#packet_frequency").addClass("red");
             }
